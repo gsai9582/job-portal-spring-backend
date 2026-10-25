@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>OTP Verification</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>Verify OTP</h2>
+        <form th:action="@{/otp/verify}" method="post">
+            <input type="hidden" th:name="email" th:value="${email}">
+            <div>
+                <label>Enter 6-digit OTP sent to <span th:text="${email}"></span>:</label>
+                <input type="text" name="otp" maxlength="6" required pattern="[0-9]{6}">
+            </div>
+            <button type="submit">Verify</button>
+        </form>
+        <p th:if="${error}" class="error" th:text="${error}"></p>
+        <p th:if="${message}" class="success" th:text="${message}"></p>
+        <button onclick="resendOtp()">Resend OTP</button>
+        <script>
+            function resendOtp() {
+                fetch('/otp/resend', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                    body: 'email=' + encodeURIComponent(document.querySelector('input[name="email"]').value)
+                }).then(() => location.reload());
+            }
+        </script>
+    </div>
+</body>
+</html>

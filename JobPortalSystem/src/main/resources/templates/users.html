@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>All Registered Users - Job Portal Admin</title>
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+        th, td { padding: 12px; text-align: left; border-bottom: 1px solid #ddd; }
+        th { background-color: #f4f4f4; font-weight: bold; }
+        .admin-header { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 20px; text-align: center; }
+        .btn { padding: 8px 16px; margin: 5px; text-decoration: none; border-radius: 5px; }
+        .btn-primary { background: #007bff; color: white; }
+        .role-admin { background-color: #d4edda; }
+        .role-employer { background-color: #fff3cd; }
+        .role-job_seeker { background-color: #f8d7da; }
+    </style>
+</head>
+<body>
+    <div class="admin-header">
+        <h1>🏢 Job Portal - All Registered Users</h1>
+        <p>Total Users: <strong th:text="${totalUsers}"></strong></p>
+        <a th:href="@{/admin-dashboard.html}" class="btn btn-primary">← Back to Dashboard</a>
+    </div>
+
+    <div style="padding: 20px; max-width: 1200px; margin: 0 auto;">
+        <table th:if="${users != null and !users.isEmpty()}">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Resume</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="user : ${users}" 
+                    th:classappend="${user.role == 'ADMIN'} ? 'role-admin' : 
+                                   ${user.role == 'EMPLOYER'} ? 'role-employer' : 'role-job_seeker'">
+                    <td th:text="${user.id}"></td>
+                    <td th:text="${user.name}"></td>
+                    <td th:text="${user.email}"></td>
+                    <td th:text="${user.role}"></td>
+                    <td th:text="${user.resumePath != null} ? ${user.resumePath} : 'No resume'"></td>
+                    <td>
+                        <a th:href="@{'/api/users/' + ${user.id}}" class="btn" style="background: #28a745;">View</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div th:if="${users == null or users.isEmpty()}" style="text-align: center; padding: 40px;">
+            <h3>📭 No users registered yet</h3>
+            <p>Create some test accounts using the registration form!</p>
+        </div>
+</body>
+</html>

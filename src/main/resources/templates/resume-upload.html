@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Upload Resume</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>AI Resume Analyzer</h2>
+        <form th:action="@{/resume/upload}" method="post" enctype="multipart/form-data">
+            <div>
+                <label for="resume">Upload PDF Resume:</label>
+                <input type="file" id="resume" name="resume" accept=".pdf" required>
+            </div>
+            <button type="submit">Analyze with AI</button>
+        </form>
+    </div>
+</body>
+</html>

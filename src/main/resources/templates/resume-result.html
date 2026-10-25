@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Resume Analysis</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" th:href="@{/css/app.css}">
+</head>
+<body>
+    <div class="container">
+        <h2>AI Resume Analysis Result</h2>
+        <div class="score">Resume Score: <span th:text="${resumeScore}"></span></div>
+        <h3>Extracted Skills:</h3>
+        <ul>
+            <li th:each="skill : ${skills}" th:text="${skill}"></li>
+        </ul>
+        <h3>Preview:</h3>
+        <p th:text="${textPreview}"></p>
+        <a th:href="@{/dashboard}">Back to Dashboard</a>
+    </div>
+</body>
+</html>
